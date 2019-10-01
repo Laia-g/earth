@@ -1,13 +1,13 @@
-from model1 import Experiment1
+from model1 import Experiment
 import numpy as np
 import math
 import random
 
 def gen_data1(experiment):
-    maxNlons = 20
+    maxNlons = 5
     nlatsHem = maxNlons * 2
-    ts_num = 20
-    ilevs = 50
+    ts_num = 1
+    ilevs = 1
     distLats = 89/nlatsHem
     lats = [n*distLats for n in range (-nlatsHem, nlatsHem+1)]
     nlons = [int(maxNlons - math.trunc(abs(lat / distLats)) / 3) for lat in lats]
@@ -23,24 +23,18 @@ def gen_data1(experiment):
 
     for ts in range (ts_num):
         for icoord in range (totalCoord):
-                for ilev in range (ilevs):
-                    dataFields[icoord, ilev] = random.uniform(0, 50)
+            if icoord == 44:
+                stop = 1
+            for ilev in range (ilevs):
+                dataFields[icoord, ilev] = random.uniform(1, 50)
         experiment.Data.data[ts] = dataFields
 
-                # for lon in range (0, nlons):
-                #      for ilev in range (ilevs):
-                #         for nfield in range (nfields):
-                #             dataFields[ilat, ilev, nfield] = random.uniform(0, 50)
-
-
-        #experiment.Data.data[ts] = dataFields
-
-    experiment.Data.nilevs = ilevs
+    experiment.Data.nilev = ilevs
     experiment.nlats = nlatsHem *2+1
     experiment.nlons = maxNlons
 
 
 if __name__ == '__main__':
 
-    experiment = Experiment("myapp.experiment1")
+    experiment = Experiment("my_app.experiment1")
     gen_data1(experiment)
