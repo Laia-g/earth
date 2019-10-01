@@ -1,5 +1,6 @@
 from hecuba import StorageDict
-from model1 import ModelData, Experiment
+from model1 import Experiment
+from generate1 import  gen_data1
 import numpy as np
 import math, time
 
@@ -31,6 +32,8 @@ def interpolation (experiment, distances):
     for ts in experiment.Data.data.keys():
         field_values = experiment.Data.data[ts]
         for ilat,lat in enumerate(experiment.grid.keys()):
+            if ilat == 13:
+                stop = 1
             originalDistance = distances[lat].original_dist
             previous = distances[lat].previousPoint
             values1 = np.array([field_values[experiment.grid[lat].total_index + i, : ] for i in previous])
@@ -39,7 +42,7 @@ def interpolation (experiment, distances):
             values2 = np.array([field_values [experiment.grid[lat].total_index + (i),  :] for i in following])
             distances1 = distances[lat].dist1
             distances2 = originalDistance - distances1
-            interpolatedFields [ilat, :, : ] = (np.multiply(values1, distances1[:, None]) + np.multiply(values2, distances2[:, None]))/originalDistance
+            interpolatedFields [ilat, :, : ] = (np.multiply(values1, distances2[:, None]) + np.multiply(values2, distances1[:, None]))/originalDistance
         interpolated[ts] = interpolatedFields;
 
 
@@ -53,7 +56,8 @@ if __name__ == "__main__":
 
     #Data = ModelData("myapp.data")
     experiment = Experiment ("my_app.experiment")
-    distances = Distances("myapp.dist")
+    #gen_data1(experiment)
+    distances = Distances("my_app.dist")
 
 
     start = time.time()

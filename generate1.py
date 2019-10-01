@@ -16,18 +16,18 @@ def gen_data1(experiment):
         nIndex.append(nIndex [i-1] + nlons[i])
 
     totalCoord = nIndex[len(nIndex)-1] + nlons[len(nlons)-1]
-    dataFields = np.empty((totalCoord, ilevs))
+
 
     for ilat, lat in enumerate(lats):
         experiment.grid[lat] = [nlons[ilat], nIndex[ilat]]
 
     for ts in range (ts_num):
+        dFields = np.empty((totalCoord, ilevs))
         for icoord in range (totalCoord):
-            if icoord == 44:
-                stop = 1
             for ilev in range (ilevs):
-                dataFields[icoord, ilev] = random.uniform(1, 50)
-        experiment.Data.data[ts] = dataFields
+                dFields[icoord, ilev] = random.uniform(1, 50)
+        experiment.Data.data[ts] = np.copy(dFields)
+        res = np.copy(dFields)
 
     experiment.Data.nilev = ilevs
     experiment.nlats = nlatsHem *2+1
@@ -36,5 +36,5 @@ def gen_data1(experiment):
 
 if __name__ == '__main__':
 
-    experiment = Experiment("my_app.experiment1")
+    experiment = Experiment("my_app.experiment")
     gen_data1(experiment)

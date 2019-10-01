@@ -1,7 +1,4 @@
 from hecuba import StorageObj
-
-
-
 class ModelData(StorageObj):
     '''
     @ClassField nilev int
