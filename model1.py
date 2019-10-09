@@ -1,4 +1,4 @@
-from hecuba import StorageObj
+from hecuba import StorageObj, StorageDict
 class ModelData(StorageObj):
     '''
     @ClassField nilev int
@@ -17,4 +17,5 @@ class Experiment(StorageObj):
     @ClassField grid dict <<lat:double>, nlons:int, total_index:int>
     @ClassField Data model1.ModelData
     """
+
 
